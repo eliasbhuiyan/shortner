@@ -58,4 +58,18 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signup, login };
+const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const userData = await userSchema.findById(user.id);
+    if (!userData)
+      return res.status(404).send({ message: "User profile not found" });
+
+    res.status(200).send(userData);
+  } catch (error) {
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { signup, login, getProfile };

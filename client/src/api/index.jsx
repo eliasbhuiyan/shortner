@@ -3,6 +3,7 @@ import axios from "axios";
 // Create Axios instance
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/",
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -10,7 +11,7 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = cookieStore.get;
     if (token) {
       config.headers.Authorization = `${token}`;
     }
@@ -20,16 +21,12 @@ api.interceptors.request.use(
 );
 
 const authServices = {
-  login: async (email, password) => {
-    const res = await api.post("/auth/login", { email, password });
+  login: async (logData) => {
+    const res = await api.post("/auth/login", logData);
     return res.data;
   },
-  registration: async (fullName, email, password) => {
-    const res = await api.post("/auth/registration", {
-      fullName,
-      email,
-      password,
-    });
+  registration: async (registerData) => {
+    const res = await api.post("/auth/signup", registerData);
     return res.data;
   },
   getProfile: async () => {

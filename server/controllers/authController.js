@@ -41,17 +41,19 @@ const login = async (req, res) => {
 
     const existingUser = await userSchema.findOne({ email });
     if (!existingUser)
-      return res.status(400).send({ message: "User not found" });
+      return res.status(400).send({ message: "Invalid Request" });
     const matchPass = await existingUser.comparePassword(password);
-    if (!matchPass)
-      return res.status(400).send({ message: "Incorrect password" });
+    if (!matchPass) return res.status(400).send({ message: "Invalid Request" });
 
     const token = generateAccTkn({
       id: existingUser._id,
       email: existingUser.email,
     });
 
-    res.cookie("acc_token", token);
+    res.cookie("acc_token", token, {
+      httpOnly: false,
+      secure: false,
+    });
     res.status(200).send({ message: "Login Successfully" });
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });

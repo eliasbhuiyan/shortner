@@ -2,7 +2,7 @@ const { verifyToken } = require("../utils/tokens");
 
 const isAuthentic = (req, res, next) => {
   try {
-    const token = req.headers.acc_token;
+    const token = req.headers.authorization;
     const decoded = verifyToken(token);
     req.user = decoded;
     next();
@@ -13,8 +13,11 @@ const isAuthentic = (req, res, next) => {
 
 const authMiddleware = (req, res, next) => {
   try {
-    const token = req.headers.acc_token;
+    const token = req.headers.authorization;
+    console.log(token);
+
     const decoded = verifyToken(token);
+
     if (!decoded)
       return res.status(401).send({ message: "Unauthorized request" });
 

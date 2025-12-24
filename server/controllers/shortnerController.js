@@ -13,7 +13,6 @@ const generateRandomStr = (length = 5) => {
 const createShortUrl = async (req, res) => {
   try {
     const { urlLong } = req.body;
-    console.log("user", req.user);
 
     if (!urlLong) return res.status(400).send({ message: "Url is required" });
     if (!isValidUrl(urlLong))

@@ -64,7 +64,9 @@ const getProfile = async (req, res) => {
   try {
     const user = req.user;
 
-    const userData = await userSchema.findById(user.id);
+    const userData = await userSchema
+      .findById(user.id)
+      .select("-password -updatedAt");
     if (!userData)
       return res.status(404).send({ message: "User profile not found" });
 

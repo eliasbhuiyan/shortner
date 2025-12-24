@@ -18,8 +18,10 @@ const Login = () => {
       const res = await authServices.login(data);
       console.log(res);
     } catch (error) {
+      console.log(error);
+
       setError("apiError", {
-        message: error.response.data.message,
+        message: error?.response?.data?.message || "Server error",
       });
     }
   };

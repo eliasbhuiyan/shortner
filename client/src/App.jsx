@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import Layout from "./components/layout";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 const App = () => {
   return (
     <BrowserRouter>
@@ -12,6 +13,7 @@ const App = () => {
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>

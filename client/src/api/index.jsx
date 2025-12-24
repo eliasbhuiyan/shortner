@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "../components/utils/services";
 
 // Create Axios instance
 const api = axios.create({
@@ -11,9 +12,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = cookieStore.get;
-    if (token) {
-      config.headers.Authorization = `${token}`;
+    const acc_token = getCookie("acc_token");
+    if (acc_token) {
+      config.headers.Authorization = `${acc_token}`;
     }
     return config;
   },
